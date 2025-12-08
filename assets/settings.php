@@ -5,9 +5,19 @@
  * Drupal settings for SNIJ - Production on Render.
  */
 
-// Database configuration from environment variable
+// Database configuration
 $databases = [];
-if (getenv('DATABASE_URL')) {
+$db_driver = getenv('DATABASE_DRIVER') ?: 'sqlite';
+
+if ($db_driver === 'sqlite') {
+  // SQLite for Render free tier (no persistent database service)
+  $databases['default']['default'] = [
+    'database' => '/var/www/html/data/drupal.sqlite',
+    'driver' => 'sqlite',
+    'prefix' => '',
+  ];
+} elseif (getenv('DATABASE_URL')) {
+  // PostgreSQL for paid tiers or local development
   $db_url = parse_url(getenv('DATABASE_URL'));
   $databases['default']['default'] = [
     'database' => ltrim($db_url['path'], '/'),

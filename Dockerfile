@@ -6,10 +6,11 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libzip-dev \
-    libpq-dev \
+    libsqlite3-dev \
     libicu-dev \
     unzip \
     git \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
@@ -17,8 +18,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         gd \
         pdo \
-        pdo_pgsql \
-        pgsql \
+        pdo_sqlite \
         zip \
         opcache \
         intl
@@ -48,13 +48,19 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p web/sites/default/files \
     && mkdir -p private \
-    && mkdir -p config/sync
+    && mkdir -p config/sync \
+    && mkdir -p /var/www/html/data
+
+# Create SQLite database directory and file
+RUN touch /var/www/html/data/drupal.sqlite
 
 # Set permissions
 RUN chown -R www-data:www-data web/sites/default/files \
     && chown -R www-data:www-data private \
+    && chown -R www-data:www-data /var/www/html/data \
     && chmod -R 755 web/sites/default/files \
-    && chmod -R 755 private
+    && chmod -R 755 private \
+    && chmod -R 755 /var/www/html/data
 
 # Environment variables for Drupal
 ENV DRUPAL_SETTINGS_PATH=/var/www/html/web/sites/default/settings.php
