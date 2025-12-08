@@ -1,0 +1,11 @@
+langcode: ar
+status: true
+dependencies: {  }
+third_party_settings: {  }
+name: 'اجتهاد قضائي / Jurisprudence'
+type: jurisprudence
+description: 'Décision de justice / Court decision'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

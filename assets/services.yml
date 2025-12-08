@@ -1,0 +1,39 @@
+parameters:
+  # CORS configuration for JSON:API
+  cors.config:
+    enabled: true
+    allowedHeaders:
+      - 'content-type'
+      - 'authorization'
+      - 'x-csrf-token'
+      - 'accept-language'
+      - 'accept'
+      - 'origin'
+    allowedMethods:
+      - 'GET'
+      - 'POST'
+      - 'OPTIONS'
+      - 'PATCH'
+      - 'DELETE'
+    allowedOrigins:
+      - 'https://snij-frontend.pages.dev'
+      - 'https://snij-studio.yassine-techini.workers.dev'
+      - 'https://snij-foundry.yassine-techini.workers.dev'
+      - 'http://localhost:3000'
+      - '*'
+    exposedHeaders: true
+    maxAge: 86400
+    supportsCredentials: true
+
+  # Session settings
+  session.storage.options:
+    gc_probability: 1
+    gc_divisor: 100
+    gc_maxlifetime: 200000
+    cookie_lifetime: 2000000
+
+  # Twig settings
+  twig.config:
+    debug: false
+    auto_reload: false
+    cache: true

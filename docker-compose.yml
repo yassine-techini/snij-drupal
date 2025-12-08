@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  drupal:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      DATABASE_URL: postgres://snij:snij@postgres:5432/snij
+      DRUPAL_HASH_SALT: local-dev-hash-salt-change-in-production
+      TRUSTED_HOST_PATTERNS: "^localhost$|^127\\.0\\.0\\.1$"
+    volumes:
+      - ./web/modules/custom:/var/www/html/web/modules/custom
+      - ./web/themes/custom:/var/www/html/web/themes/custom
+      - drupal_files:/var/www/html/web/sites/default/files
+    depends_on:
+      - postgres
+    networks:
+      - snij
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: snij
+      POSTGRES_PASSWORD: snij
+      POSTGRES_DB: snij
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - snij
+
+volumes:
+  drupal_files:
+  postgres_data:
+
+networks:
+  snij:
+    driver: bridge

@@ -1,0 +1,11 @@
+langcode: ar
+status: true
+dependencies: {  }
+third_party_settings: {  }
+name: 'مرسوم / Décret'
+type: decret
+description: 'Texte de décret tunisien / Tunisian decree text'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

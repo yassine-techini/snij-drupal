@@ -1,0 +1,53 @@
+# Drupal core and contrib
+/web/core
+/web/modules/contrib
+/web/themes/contrib
+/web/profiles/contrib
+/web/libraries
+
+# Vendor directory
+/vendor
+
+# Composer files (lock file should be committed)
+# /composer.lock
+
+# Files directory
+/web/sites/*/files
+
+# Private files
+/private
+
+# Local settings
+/web/sites/*/settings.local.php
+/web/sites/*/services.local.yml
+
+# Keys (OAuth)
+/keys
+
+# SQLite databases
+*.sqlite
+*.sqlite3
+
+# PHP errors
+php_errors.log
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker
+
+# Temporary files
+/tmp
+*.tmp
+
+# Backup files
+*.bak
+*.backup

@@ -1,0 +1,11 @@
+langcode: ar
+status: true
+dependencies: {  }
+third_party_settings: {  }
+name: 'قانون / Loi'
+type: loi
+description: 'Texte de loi tunisien / Tunisian law text'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

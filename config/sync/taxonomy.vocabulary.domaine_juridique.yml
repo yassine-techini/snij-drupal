@@ -1,0 +1,7 @@
+langcode: ar
+status: true
+dependencies: {  }
+name: 'المجال القانوني / Domaine Juridique'
+vid: domaine_juridique
+description: 'Classification des textes juridiques par domaine du droit'
+weight: 0
