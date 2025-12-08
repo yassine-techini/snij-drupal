@@ -36,28 +36,30 @@ COPY docker/php.ini /usr/local/etc/php/conf.d/drupal.ini
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy composer files first for better caching
-COPY composer.json composer.lock* ./
-
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Copy application code
+# Copy all application code
 COPY . .
 
-# Create necessary directories
+# Create necessary directories before composer install
 RUN mkdir -p web/sites/default/files \
     && mkdir -p private \
     && mkdir -p config/sync \
-    && mkdir -p /var/www/html/data
+    && mkdir -p /var/www/html/data \
+    && mkdir -p keys
 
-# Create SQLite database directory and file
+# Install dependencies (will create web/core, web/modules/contrib, etc.)
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Copy settings.php after scaffold
+RUN cp assets/settings.php web/sites/default/settings.php
+
+# Create SQLite database file
 RUN touch /var/www/html/data/drupal.sqlite
 
 # Set permissions
-RUN chown -R www-data:www-data web/sites/default/files \
+RUN chown -R www-data:www-data web/sites/default \
     && chown -R www-data:www-data private \
     && chown -R www-data:www-data /var/www/html/data \
+    && chown -R www-data:www-data keys \
     && chmod -R 755 web/sites/default/files \
     && chmod -R 755 private \
     && chmod -R 755 /var/www/html/data
