@@ -46,8 +46,11 @@ RUN mkdir -p web/sites/default/files \
     && mkdir -p /var/www/html/data \
     && mkdir -p keys
 
-# Install dependencies (will create web/core, web/modules/contrib, etc.)
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Install dependencies with memory optimizations for free tier
+# COMPOSER_MEMORY_LIMIT=-1 removes memory limit
+# --prefer-dist uses zip archives instead of git clones (faster, less memory)
+# --no-progress reduces output overhead
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
 
 # Copy settings.php after scaffold
 RUN cp assets/settings.php web/sites/default/settings.php
